@@ -1,4 +1,4 @@
-package com.example.todoapplicationpersonal.data
+package com.example.todoapplicationpersonal.data.models
 
 import com.google.gson.annotations.SerializedName
 

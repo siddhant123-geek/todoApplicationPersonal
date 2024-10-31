@@ -1,4 +1,12 @@
 package com.example.todoapplicationpersonal.ui
 
-class TodosActivity {
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+
+class TodosActivity: AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 }
