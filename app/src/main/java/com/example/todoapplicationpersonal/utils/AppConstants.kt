@@ -5,5 +5,7 @@ object AppConstants {
 
     const val BASE_URL = "https://api.api-ninjas.com/v1/quotes"
 
+    const val DB_NAME = "todosDb"
+
     const val CATEGORY = "inspirational"
 }

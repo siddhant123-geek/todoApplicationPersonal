@@ -3,6 +3,7 @@ package com.example.todoapplicationpersonal.di.component
 import android.app.Application
 import android.content.Context
 import com.example.todoapplicationpersonal.data.NetworkService
+import com.example.todoapplicationpersonal.data.TodosDatabase
 import com.example.todoapplicationpersonal.data.TodosRepository
 import com.example.todoapplicationpersonal.di.ApplicationContext
 import com.example.todoapplicationpersonal.di.module.ApplicationModule
@@ -22,4 +23,5 @@ interface ApplicationComponent {
 
     fun getNetworkService(): NetworkService
 
+    fun getDatabaseService(): TodosDatabase
 }
