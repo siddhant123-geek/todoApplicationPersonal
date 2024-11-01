@@ -6,8 +6,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class QuotesRepository @Inject constructor(private val networkService: NetworkService) {
+@Singleton
+class TodosRepository @Inject constructor(private val networkService: NetworkService) {
 
     fun fetchQuote(): Flow<QuoteItem> {
         return flow {

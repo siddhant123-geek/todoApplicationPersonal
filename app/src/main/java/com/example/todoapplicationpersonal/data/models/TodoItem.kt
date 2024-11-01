@@ -14,5 +14,5 @@ data class TodoItem (
     @ColumnInfo(name = "description")
     val description: String,
     @ColumnInfo(name = "status")
-    val isCompleted: Boolean
+    val isCompleted: Boolean = false
 )
