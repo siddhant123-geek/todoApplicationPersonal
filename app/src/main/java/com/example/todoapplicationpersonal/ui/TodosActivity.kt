@@ -1,10 +1,12 @@
 package com.example.todoapplicationpersonal.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -27,13 +29,17 @@ class TodosActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityTodosBinding
 
-    private lateinit var quoteOfTheDay: QuoteItem
-
     @Inject
     lateinit var todosAdapter: TodosAdapter
 
     @Inject
     lateinit var viewModel: TodosViewModel
+
+    private val dialog: AlertDialog by lazy {
+        AlertDialog.Builder(this)
+            .setPositiveButton("Got it!") { dialog, _ -> dialog.dismiss() }
+            .create()
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,12 +57,6 @@ class TodosActivity: AppCompatActivity() {
     private fun setupUi() {
         binding.todosRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@TodosActivity)
-            addItemDecoration(
-                DividerItemDecoration(
-                    this@TodosActivity,
-                    (this.layoutManager as LinearLayoutManager).orientation
-                )
-            )
             adapter = todosAdapter
         }
     }
@@ -102,6 +102,11 @@ class TodosActivity: AppCompatActivity() {
                 viewModel.deleteTodo(it)
             }
         }
+
+        binding.motivateMe.setOnClickListener {
+            viewModel.fetchQuote()
+            viewModel.isMotivateMeBtnClicked = true
+        }
     }
 
     private fun setUpObserver() {
@@ -131,10 +136,47 @@ class TodosActivity: AppCompatActivity() {
                 }
             }
         }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiStateQuote
+                    .collect {
+                        when(it) {
+                            is UiState.Success -> {
+                                dialog.setTitle("${it.data.author} once said -")
+                                dialog.setMessage(it.data.quote)
+                                binding.progressBar.visibility = View.GONE
+                                if(viewModel.isMotivateMeBtnClicked) {
+                                    dialog.show()
+                                }
+                            }
+                            is UiState.Error -> {
+                                binding.progressBar.visibility = View.GONE
+                                if(viewModel.isMotivateMeBtnClicked) {
+                                    Toast.makeText(this@TodosActivity,
+                                        "There was an error in getting your Quote, please try again",
+                                        Toast.LENGTH_LONG).show()
+                                }
+                            }
+                            is UiState.Loading -> {
+                                Log.d(this@TodosActivity.javaClass.simpleName,
+                                    "setupObserver: uiState loading ")
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+            }
+        }
+
+//        dialog.setOnDismissListener {
+//            viewModel.fetchQuote()
+//        }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun renderList(list: List<TodoItem>) {
+        Log.d("###", "renderList: coming to render list " + list.size)
         todosAdapter.addTodoItems(list)
+        Log.d("###", "renderList: visibility of recyclerView ${binding.todosRecyclerView.visibility == View.VISIBLE}")
         todosAdapter.notifyDataSetChanged()
     }
 

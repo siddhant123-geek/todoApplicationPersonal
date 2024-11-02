@@ -10,6 +10,6 @@ import retrofit2.http.Query
 interface NetworkService {
 
     @Headers("X-Api-Key: $API_KEY")
-    @GET
-    fun getQuote(@Query("category") category: String): QuoteResponse
+    @GET("v1/quotes")
+    suspend fun getQuote(@Query("category") category: String): List<QuoteItem>
 }

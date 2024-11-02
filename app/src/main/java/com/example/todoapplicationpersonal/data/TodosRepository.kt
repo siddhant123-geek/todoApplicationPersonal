@@ -15,11 +15,8 @@ class TodosRepository @Inject constructor(private val networkService: NetworkSer
 
     fun fetchQuote(): Flow<QuoteItem> {
         return flow {
-            emit(networkService.getQuote(CATEGORY))
-            }
-            .map {
-                it.listOfQuotes[0]
-            }
+            emit(networkService.getQuote(CATEGORY)[0])
+        }
     }
 
     suspend fun fetchTodos(): Flow<List<TodoItem>> {

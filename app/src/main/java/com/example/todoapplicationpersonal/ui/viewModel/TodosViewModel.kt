@@ -1,5 +1,6 @@
 package com.example.todoapplicationpersonal.ui.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapplicationpersonal.data.TodosRepository
@@ -23,20 +24,24 @@ class TodosViewModel(private val repo: TodosRepository): ViewModel() {
 
     val uiStateTodos: StateFlow<UiState<List<TodoItem>>> = _uiStateTodos
 
+    var isMotivateMeBtnClicked: Boolean =  false
+
     init {
         fetchTodoItems()
         fetchQuote()
     }
 
-    private fun fetchQuote() {
+    fun fetchQuote() {
         viewModelScope.launch {
             _uiStateQuote.value = UiState.Loading
             repo.fetchQuote()
                 .catch {
                     _uiStateQuote.value = UiState.Error(it.message.toString())
+                    Log.d("###", "fetchQuote: in viewModel error " + it.message)
                 }
                 .collect {
                     _uiStateQuote.value = UiState.Success(it)
+                    Log.d("###", "fetchQuote: in viewModel success ##" + it.quote)
                 }
         }
     }

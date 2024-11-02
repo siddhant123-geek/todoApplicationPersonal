@@ -10,9 +10,16 @@
         android:id="@+id/todoNameInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter todo name"
+        android:background="@drawable/edit_text_style"
+        android:hint="@string/enter_todo_name"
         android:padding="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:hintTextColor="@android:color/darker_gray"
+        android:shadowColor="@color/black"
+        android:elevation="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -21,9 +28,18 @@
         android:id="@+id/todoDescriptionInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter todo description"
+        android:background="@drawable/edit_text_style"
+        android:hint="@string/enter_todo_description"
+        android:elevation="10dp"
+        android:textSize="16sp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:textColor="@android:color/black"
+        android:shadowColor="@color/black"
+        app:hintTextColor="@android:color/darker_gray"
         android:padding="8dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/todoNameInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -33,22 +49,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add"
-        android:padding="8dp"
+        android:layout_marginVertical="10dp"
+        android:padding="16dp"
+        android:backgroundTint="@color/green"
         app:layout_constraintTop_toBottomOf="@id/todoDescriptionInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/deleteAllTodos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/red"
+        android:drawableEnd="@drawable/delete_icon"
+        android:drawableTint="@color/white"
+        android:padding="16dp"
         android:text="Delete all"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/todoDescriptionInput"
-        app:layout_constraintEnd_toStartOf="@+id/addTodoButton"
+        android:layout_marginVertical="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"/>
+        app:layout_constraintEnd_toStartOf="@+id/addTodoButton"
+        app:layout_constraintTop_toBottomOf="@id/todoDescriptionInput" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/todosRecyclerView"
@@ -57,18 +77,20 @@
         app:layout_constraintTop_toBottomOf="@id/addTodoButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/seeQuotes" />
+        app:layout_constraintBottom_toTopOf="@id/motivateMe" />
 
     <Button
-        android:id="@+id/seeQuotes"
+        android:id="@+id/motivateMe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Motivate me"
+        android:text="@string/motivate_me"
         android:padding="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/light"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

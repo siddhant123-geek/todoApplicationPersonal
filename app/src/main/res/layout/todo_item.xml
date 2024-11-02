@@ -1,50 +1,73 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:layout_margin="8dp"
+    android:backgroundTint="@color/white"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="10dp"
+    app:strokeWidth="0dp">
 
-    <TextView
-        android:id="@+id/todoName"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Todo Name"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/todoCheckBox" />
-    <CheckBox
-        android:id="@+id/todoCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Completed"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/todoDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/todoCheckBox"
-        app:layout_constraintStart_toStartOf="@id/todoName"
-        app:layout_constraintTop_toBottomOf="@id/todoName" />
+        <!-- Todo Name TextView -->
+        <TextView
+            android:id="@+id/todoName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Todo Name"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/todoCheckBox" />
 
-    <Button
-        android:id="@+id/deleteTodoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/todoCheckBox"
-        app:layout_constraintTop_toBottomOf="@id/todoDescription" />
+        <!-- Todo Description TextView -->
+        <TextView
+            android:id="@+id/todoDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textSize="14sp"
+            android:textColor="@color/blue"
+            app:layout_constraintEnd_toStartOf="@id/todoCheckBox"
+            app:layout_constraintStart_toStartOf="@id/todoName"
+            app:layout_constraintTop_toBottomOf="@id/todoName" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Completed CheckBox -->
+        <CheckBox
+            android:id="@+id/todoCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completed"
+            android:textAllCaps="true"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@id/todoName"
+            app:layout_constraintBottom_toTopOf="@id/deleteTodoButton"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Delete Button -->
+        <Button
+            android:id="@+id/deleteTodoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/red"
+            android:text="Delete"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/todoCheckBox"
+            app:layout_constraintStart_toStartOf="@id/todoCheckBox"
+            app:layout_constraintTop_toBottomOf="@id/todoCheckBox"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
