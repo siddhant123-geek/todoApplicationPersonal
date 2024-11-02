@@ -22,9 +22,24 @@ class TodosRepository @Inject constructor(private val networkService: NetworkSer
             }
     }
 
-    fun fetchTodos(): Flow<List<TodoItem>> {
-        return flow {
-            emit(database.todosDao().getAllTodos())
-        }
+    suspend fun fetchTodos(): Flow<List<TodoItem>> {
+        return database.todosDao().getAllTodos()
+
+    }
+
+    suspend fun addTodo(todo: TodoItem) {
+        database.todosDao().insertTodo(todo)
+    }
+
+    suspend fun deleteAllTodos() {
+        database.todosDao().deleteTodos()
+    }
+
+    suspend fun deleteTodo(todoId: Long) {
+        database.todosDao().deleteTodos(todoId)
+    }
+
+    suspend fun updateTodo(todoId: Long, isChecked: Boolean) {
+        database.todosDao().updateTodoStatus(todoId, isChecked)
     }
 }

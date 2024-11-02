@@ -56,4 +56,19 @@ class TodosViewModel(private val repo: TodosRepository): ViewModel() {
         }
     }
 
+    suspend fun addTodoItem(todo: TodoItem) {
+        repo.addTodo(todo)
+    }
+
+    suspend fun deleteAllTodos() {
+        repo.deleteAllTodos()
+    }
+
+    suspend fun deleteTodo(id: Long) {
+        repo.deleteTodo(id)
+    }
+
+    suspend fun updateTodo(todoId: Long, isChecked: Boolean) {
+        repo.updateTodo(todoId, isChecked)
+    }
 }

@@ -25,23 +25,26 @@
         android:text="Completed"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
     <TextView
         android:id="@+id/todoDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Description"
         android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/todoCheckBox"
         app:layout_constraintStart_toStartOf="@id/todoName"
-        app:layout_constraintTop_toBottomOf="@id/todoName"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/todoName" />
+
     <Button
         android:id="@+id/deleteTodoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Delete"
-        app:layout_constraintTop_toBottomOf="@id/todoDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintStart_toStartOf="@+id/todoCheckBox"
+        app:layout_constraintTop_toBottomOf="@id/todoDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -19,6 +19,7 @@ import com.example.todoapplicationpersonal.di.component.DaggerActivityComponent
 import com.example.todoapplicationpersonal.di.module.ActivityModule
 import com.example.todoapplicationpersonal.ui.viewModel.TodosViewModel
 import com.example.todoapplicationpersonal.utils.UiState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -44,6 +45,7 @@ class TodosActivity: AppCompatActivity() {
 
         setupUi()
         setUpObserver()
+        setupClickListeners()
     }
 
     private fun setupUi() {
@@ -56,6 +58,49 @@ class TodosActivity: AppCompatActivity() {
                 )
             )
             adapter = todosAdapter
+        }
+    }
+
+    private fun setupClickListeners() {
+        binding.addTodoButton.setOnClickListener {
+            val todo = binding.todoNameInput.text.toString()
+            val todoDesc = binding.todoDescriptionInput.text.toString()
+            if(todo.isEmpty()) {
+                Toast.makeText(this, "Please enter a valid todo text", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if(todoDesc.isEmpty()) {
+                Toast.makeText(this, "Please enter a valid todo description", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val todoItem = TodoItem(
+                name = todo,
+                description = todoDesc,
+                isCompleted = false
+            )
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.addTodoItem(todoItem)
+            }
+        }
+
+        binding.deleteAllTodos.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.deleteAllTodos()
+            }
+        }
+
+        todosAdapter.checkChangedListener = { todoId, isChecked ->
+            lifecycleScope.launch(Dispatchers.IO) {
+                Log.d("###", "setupClickListeners: updating the todo $todoId with $isChecked")
+                viewModel.updateTodo(todoId, isChecked)
+            }
+        }
+
+        todosAdapter.deleteTodo = {
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.deleteTodo(it)
+            }
         }
     }
 
