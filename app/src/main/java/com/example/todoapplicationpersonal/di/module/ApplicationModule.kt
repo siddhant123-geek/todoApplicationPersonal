@@ -63,7 +63,7 @@ class ApplicationModule(private val application: Application) {
     @Provides
     @Singleton
     fun provideDatabaseService(
-        @ActivityContext context: Context,
+        @ApplicationContext context: Context,
         @DbName dbName: String
     ): TodosDatabase {
         return Room.databaseBuilder(

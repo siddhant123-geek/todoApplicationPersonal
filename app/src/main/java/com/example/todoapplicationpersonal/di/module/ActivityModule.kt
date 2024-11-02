@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapplicationpersonal.data.TodosRepository
+import com.example.todoapplicationpersonal.data.models.TodoItem
 import com.example.todoapplicationpersonal.di.ActivityContext
 import com.example.todoapplicationpersonal.di.ActivityScope
 import com.example.todoapplicationpersonal.ui.TodosAdapter
@@ -37,6 +38,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @ActivityScope
     fun provideTodosAdapter(): TodosAdapter {
-        return TodosAdapter(emptyList())
+        return TodosAdapter(ArrayList())
     }
 }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapplicationpersonal.data.models.TodoItem
 import com.example.todoapplicationpersonal.databinding.TodoItemBinding
 
-class TodosAdapter(private val todosList: List<TodoItem>):
+class TodosAdapter(private val todosList: ArrayList<TodoItem>):
     RecyclerView.Adapter<TodosAdapter.DataViewHolder>(){
 
     inner class DataViewHolder(private val binding: TodoItemBinding):
@@ -32,5 +32,10 @@ class TodosAdapter(private val todosList: List<TodoItem>):
 
     override fun getItemCount(): Int {
         return todosList.size
+    }
+
+    fun addTodoItems(list: List<TodoItem>) {
+        todosList.clear()
+        todosList.addAll(list)
     }
 }

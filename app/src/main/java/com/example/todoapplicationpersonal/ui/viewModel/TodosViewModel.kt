@@ -4,17 +4,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapplicationpersonal.data.TodosRepository
 import com.example.todoapplicationpersonal.data.models.QuoteItem
+import com.example.todoapplicationpersonal.data.models.TodoItem
 import com.example.todoapplicationpersonal.utils.UiState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TodosViewModel(private val repo: TodosRepository): ViewModel() {
 
-    private val _uiState: MutableStateFlow<UiState<QuoteItem>> = MutableStateFlow(UiState.Loading)
+    private val _uiStateQuote: MutableStateFlow<UiState<QuoteItem>> = MutableStateFlow(UiState.Loading)
 
-    val uiState: StateFlow<UiState<QuoteItem>> = _uiState
+    val uiStateQuote: StateFlow<UiState<QuoteItem>> = _uiStateQuote
+
+    private val _uiStateTodos: MutableStateFlow<UiState<List<TodoItem>>> = MutableStateFlow(UiState.Loading)
+
+    val uiStateTodos: StateFlow<UiState<List<TodoItem>>> = _uiStateTodos
 
     init {
         fetchTodoItems()
@@ -23,19 +30,30 @@ class TodosViewModel(private val repo: TodosRepository): ViewModel() {
 
     private fun fetchQuote() {
         viewModelScope.launch {
-            _uiState.value = UiState.Loading
+            _uiStateQuote.value = UiState.Loading
             repo.fetchQuote()
                 .catch {
-                    _uiState.value = UiState.Error(it.message.toString())
+                    _uiStateQuote.value = UiState.Error(it.message.toString())
                 }
                 .collect {
-                    _uiState.value = UiState.Success(it)
+                    _uiStateQuote.value = UiState.Success(it)
                 }
         }
     }
 
     private fun fetchTodoItems() {
-
+        viewModelScope.launch {
+            _uiStateQuote.value = UiState.Loading
+            withContext(Dispatchers.IO) {
+                repo.fetchTodos()
+                    .catch {
+                        _uiStateTodos.value = UiState.Error(it.message.toString())
+                    }
+                    .collect {
+                        _uiStateTodos.value = UiState.Success(it)
+                    }
+            }
+        }
     }
 
 }
