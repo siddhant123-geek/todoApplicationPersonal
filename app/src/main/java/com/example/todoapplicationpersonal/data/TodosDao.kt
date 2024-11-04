@@ -28,4 +28,7 @@ interface TodosDao {
 
     @Query("UPDATE todos SET status = :newStatus WHERE todoId = :id")
     suspend fun updateTodoStatus(id: Long, newStatus: Boolean)
+
+    @Query("SELECT todoId FROM todos WHERE status = 0")
+    suspend fun getIncompleteTasks(): List<Long>
 }

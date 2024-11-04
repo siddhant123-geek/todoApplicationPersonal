@@ -8,4 +8,12 @@ object AppConstants {
     const val DB_NAME = "todosDb"
 
     const val CATEGORY = "inspirational"
+
+    const val NOTIFICATION_CHANNEL_ID = "channelId"
+
+    const val NOTIFICATION_CHANNEL_NAME = "todoChannel"
+
+    const val SHARED_PREFS_NAME = "todosSharedPrefs"
+
+    const val TASK_PENDING = "taskPending"
 }
