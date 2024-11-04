@@ -30,7 +30,7 @@ class TodosApplication : Application() {
         Log.d("###", "initializeTheWorkManager: workManager initialized")
 
         val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
             .build()
 
         val myWorkRequest = PeriodicWorkRequestBuilder<NotifyWorker>(
