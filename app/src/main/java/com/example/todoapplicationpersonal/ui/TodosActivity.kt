@@ -95,6 +95,11 @@ class TodosActivity : AppCompatActivity() {
         binding.addTodoButton.setOnClickListener {
             val todo = binding.todoNameInput.text.toString()
             val todoDesc = binding.todoDescriptionInput.text.toString()
+
+            // clear the edit texts
+            binding.todoNameInput.setText("")
+            binding.todoDescriptionInput.setText("")
+
             if (todo.isEmpty()) {
                 Toast.makeText(this, "Please enter a valid todo text", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -201,10 +206,11 @@ class TodosActivity : AppCompatActivity() {
 
                             is UiState.Error -> {
                                 binding.progressBar.visibility = View.GONE
+                                val errorMsg = it.error
                                 if (viewModel.isMotivateMeBtnClicked) {
                                     Toast.makeText(
                                         this@TodosActivity,
-                                        "There was an error in getting your Quote, please try again",
+                                        "There was an error in getting your Quote, please try again. Error - $errorMsg",
                                         Toast.LENGTH_LONG
                                     ).show()
                                 }
@@ -213,7 +219,7 @@ class TodosActivity : AppCompatActivity() {
                             is UiState.Loading -> {
                                 Log.d(
                                     this@TodosActivity.javaClass.simpleName,
-                                    "setupObserver: uiState loading "
+                                    "setupObserver: uiState loading"
                                 )
                                 if (viewModel.isMotivateMeBtnClicked) {
                                     binding.progressBar.visibility = View.VISIBLE
@@ -223,10 +229,6 @@ class TodosActivity : AppCompatActivity() {
                     }
             }
         }
-
-//        dialog.setOnDismissListener {
-//            viewModel.fetchQuote()
-//        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

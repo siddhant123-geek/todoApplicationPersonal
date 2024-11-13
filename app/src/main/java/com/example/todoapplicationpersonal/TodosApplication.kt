@@ -34,7 +34,7 @@ class TodosApplication : Application() {
             .build()
 
         val myWorkRequest = PeriodicWorkRequestBuilder<NotifyWorker>(
-            repeatInterval = 6,
+            repeatInterval = 3,
             repeatIntervalTimeUnit = TimeUnit.HOURS
         )
             .setConstraints(constraints)
