@@ -28,7 +28,6 @@ class NotifyWorker @Inject constructor(
     @SuppressLint("RestrictedApi")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun doWork(): Result {
-        Log.d("###", "doWork: flow coming to this")
         try {
             val sharedPrefs = context.getSharedPreferences(
                 SHARED_PREFS_NAME,
@@ -39,7 +38,6 @@ class NotifyWorker @Inject constructor(
                 false
             )
             if (pendingTasks) {
-                Log.d("###", "doWork: comimng to pending task in workManager")
                 NotificationHelper.createNotificationChannel(applicationContext)
                 val notification = NotificationHelper.createNotification(applicationContext)
                 val notificationManager = NotificationManagerCompat.from(applicationContext)

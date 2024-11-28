@@ -27,8 +27,6 @@ class TodosApplication : Application() {
     }
 
     private fun initializeTheWorkManager() {
-        Log.d("###", "initializeTheWorkManager: workManager initialized")
-
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
             .build()

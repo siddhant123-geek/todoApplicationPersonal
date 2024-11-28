@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -128,7 +127,6 @@ class TodosActivity : AppCompatActivity() {
 
         todosAdapter.checkChangedListener = { todoId, isChecked ->
             lifecycleScope.launch(Dispatchers.IO) {
-                Log.d("###", "setupClickListeners: updating the todo $todoId with $isChecked")
                 viewModel.updateTodo(todoId, isChecked)
             }
         }
@@ -167,10 +165,6 @@ class TodosActivity : AppCompatActivity() {
                         }
 
                         is UiState.Loading -> {
-                            Log.d(
-                                this@TodosActivity.javaClass.simpleName,
-                                "setupObserver: uiState loading "
-                            )
                             binding.progressBar.visibility = View.VISIBLE
                             binding.todosRecyclerView.visibility = View.GONE
                         }
@@ -178,11 +172,9 @@ class TodosActivity : AppCompatActivity() {
                     withContext(Dispatchers.IO) {
                         val pendingTasks = db.todosDao().getIncompleteTasks()
                         if (pendingTasks.isNotEmpty()) {
-                            Log.d("###", "setUpObserver: pending task is set true in activity")
                             sharedPreferences.edit().putBoolean(TASK_PENDING, true)
                                 .apply()
                         } else {
-                            Log.d("###", "setUpObserver: pending task is set false in activity")
                             sharedPreferences.edit().putBoolean(TASK_PENDING, false)
                                 .apply()
                         }
@@ -217,10 +209,6 @@ class TodosActivity : AppCompatActivity() {
                             }
 
                             is UiState.Loading -> {
-                                Log.d(
-                                    this@TodosActivity.javaClass.simpleName,
-                                    "setupObserver: uiState loading"
-                                )
                                 if (viewModel.isMotivateMeBtnClicked) {
                                     binding.progressBar.visibility = View.VISIBLE
                                 }
@@ -233,12 +221,7 @@ class TodosActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun renderList(list: List<TodoItem>) {
-        Log.d("###", "renderList: coming to render list " + list.size)
         todosAdapter.addTodoItems(list)
-        Log.d(
-            "###",
-            "renderList: visibility of recyclerView ${binding.todosRecyclerView.visibility == View.VISIBLE}"
-        )
         todosAdapter.notifyDataSetChanged()
     }
 

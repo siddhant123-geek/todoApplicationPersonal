@@ -1,6 +1,5 @@
 package com.example.todoapplicationpersonal.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapplicationpersonal.data.TodosRepository
@@ -11,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -35,13 +35,12 @@ class TodosViewModel(private val repo: TodosRepository): ViewModel() {
         viewModelScope.launch {
             _uiStateQuote.value = UiState.Loading
             repo.fetchQuote()
+                .flowOn(Dispatchers.IO)
                 .catch {
                     _uiStateQuote.value = UiState.Error(it.message.toString())
-                    Log.d("###", "fetchQuote: in viewModel error " + it.message)
                 }
                 .collect {
                     _uiStateQuote.value = UiState.Success(it)
-                    Log.d("###", "fetchQuote: in viewModel success ##" + it.quote)
                 }
         }
     }

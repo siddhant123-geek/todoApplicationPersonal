@@ -3,8 +3,10 @@ package com.example.todoapplicationpersonal.data
 import com.example.todoapplicationpersonal.data.models.QuoteItem
 import com.example.todoapplicationpersonal.data.models.TodoItem
 import com.example.todoapplicationpersonal.utils.AppConstants.CATEGORY
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,7 +18,7 @@ class TodosRepository @Inject constructor(private val networkService: NetworkSer
     fun fetchQuote(): Flow<QuoteItem> {
         return flow {
             emit(networkService.getQuote(CATEGORY)[0])
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun fetchTodos(): Flow<List<TodoItem>> {
